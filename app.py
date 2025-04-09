@@ -6,18 +6,18 @@ import os
 import matplotlib.pyplot as plt
 
 st.set_page_config(page_title="Loan Approval Predictor", layout="centered")
-st.title("🏦 Loan Eligibility Prediction App")
+st.title("Loan Eligibility Prediction App")
 
 model_path = 'models/loan_model.pkl'
 
 # Load the model
 if not os.path.exists(model_path):
-    st.error("🚨 Model not found. Please run `train.py` to train and save the model.")
+    st.error("Model not found. Please run `train.py` to train and save the model.")
     st.stop()
 
 model = joblib.load(model_path)
 
-st.markdown("### 🧾 Please fill in applicant details below:")
+st.markdown("### Please fill in applicant details below:")
 
 # ---- Inputs with defaults ----
 gender = st.selectbox("Gender", ['Male', 'Female'], index=0)
@@ -33,7 +33,7 @@ credit_history = st.selectbox("Credit History", [1.0, 0.0], index=0)
 property_area = st.selectbox("Property Area", ['Urban', 'Rural', 'Semiurban'], index=0)
 
 # ---- Button to predict ----
-if st.button("📊 Predict Loan Eligibility"):
+if st.button("Predict Loan Eligibility"):
     input_data = {
         'ApplicantIncome': applicant_income,
         'CoapplicantIncome': coapplicant_income,
@@ -60,13 +60,13 @@ if st.button("📊 Predict Loan Eligibility"):
 
     # Predict
     prediction = model.predict(input_df)[0]
-    prediction_label = "✅ Loan Approved" if prediction == 1 else "❌ Loan Denied"
+    prediction_label = "Loan got approved" if prediction == 1 else "Loan got Denied"
 
     # Result
-    st.subheader("📢 Prediction Result:")
+    st.subheader("Prediction Result:")
     st.markdown(f"### {prediction_label}")
 
     # Visual summary
-    st.subheader("📈 Feature Overview:")
+    st.subheader("Feature Overview:")
     st.bar_chart(input_df.T.rename(columns={0: 'Value'}))
 
